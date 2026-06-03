@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { AlertCircle } from 'lucide-react';
 
-// Sourced direct image pathways from your local absolute disk paths
-import login1Mesh from 'D:/orufy/client/src/assets/login1.png';
-import login2Runner from 'D:/orufy/client/src/assets/login2.jpg';
+// Sourced direct image pathways from your local assets
+import login1Mesh from '../assets/login1.png';
+import login2Runner from '../assets/login2.jpg';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
