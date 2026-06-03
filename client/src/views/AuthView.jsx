@@ -5,7 +5,10 @@ import { AlertCircle } from 'lucide-react';
 import login1Mesh from '../assets/login1.png';
 import login2Runner from '../assets/login2.jpg';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+let API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+if (API_BASE_URL.endsWith('/')) {
+  API_BASE_URL = API_BASE_URL.slice(0, -1);
+}
 
 export default function AuthView({ onLoginSuccess }) {
   const [authState, setAuthState] = useState('EMAIL'); // 'EMAIL' | 'OTP'

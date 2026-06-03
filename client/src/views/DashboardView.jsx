@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Home, ShoppingBag, Search, LayoutGrid, ChevronDown, X, Plus, Trash2, Menu } from 'lucide-react';
 
-// Define your central backend endpoint URL base path
-const API_BASE_URL = import.meta.env.VITE_API_URL 
-  ? `${import.meta.env.VITE_API_URL}/api/products` 
-  : 'http://localhost:5000/api/products';
+let rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+if (rawApiUrl.endsWith('/')) {
+  rawApiUrl = rawApiUrl.slice(0, -1);
+}
+const API_BASE_URL = `${rawApiUrl}/api/products`;
 
 export default function DashboardView() {
   // Navigation Routing States

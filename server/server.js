@@ -15,7 +15,10 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173'], // Add your exact frontend local URLs here
+  origin: (origin, callback) => {
+    // Dynamically allow any origin to avoid CORS blocks on deployment
+    callback(null, true);
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   credentials: true
 }));
