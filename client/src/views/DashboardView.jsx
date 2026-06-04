@@ -39,8 +39,8 @@ export default function DashboardView() {
 
   // Sample static images layout matching configuration
   const [images, setImages] = useState([
-    { id: '1', url: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=120&q=80' },
-    { id: '2', url: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=120&q=80' }
+    { id: '1', url: '' },
+    { id: '2', url: '' }
   ]);
 
   // Lifecycle Hook: Fetch all existing products from the backend database when the page mounts
