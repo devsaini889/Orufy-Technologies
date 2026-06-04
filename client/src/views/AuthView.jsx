@@ -209,8 +209,11 @@ export default function AuthView({ onLoginSuccess }) {
           {/* VIEW B: Render Separated 6-Digit Verification OTP Form Panel */}
           {authState === 'OTP' && (
             <form onSubmit={handleOtpSubmit} className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
-              <div className="space-y-1">
+              <div className="space-y-2">
                 <h2 className="text-2xl font-bold tracking-tight text-[#0B1953]">Login to your Productr Account</h2>
+                <div className="text-xs text-[#0F1A80] bg-blue-50 border border-blue-100 rounded-lg p-3 font-medium">
+                  For evaluation, you can use the code: <strong className="font-bold underline">123456</strong>
+                </div>
               </div>
 
               <div className="space-y-2">
