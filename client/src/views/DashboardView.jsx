@@ -37,12 +37,7 @@ export default function DashboardView() {
   const [eligibility, setEligibility] = useState('Yes');
   const [error, setError] = useState('');
 
-  // Sample static images layout matching configuration
-  const [images, setImages] = useState([
-    { id: '1', url: '' },
-    { id: '2', url: '' }
-  ]);
-
+ 
   // Lifecycle Hook: Fetch all existing products from the backend database when the page mounts
   useEffect(() => {
     fetchProductsFromBackend();
