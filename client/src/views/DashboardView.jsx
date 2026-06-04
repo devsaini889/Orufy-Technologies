@@ -36,8 +36,9 @@ export default function DashboardView() {
   const [brandName, setBrandName] = useState('');
   const [eligibility, setEligibility] = useState('Yes');
   const [error, setError] = useState('');
+  const [images, setImages] = useState([]);
 
- 
+
   // Lifecycle Hook: Fetch all existing products from the backend database when the page mounts
   useEffect(() => {
     fetchProductsFromBackend();
@@ -78,6 +79,7 @@ export default function DashboardView() {
     setSellingPrice('');
     setBrandName('');
     setEligibility('Yes');
+    setImages([]);
     setError('');
     setIsModalOpen(true);
   };
@@ -164,7 +166,7 @@ export default function DashboardView() {
       sellingPrice: Number(sellingPrice) || 0,
       brandName,
       eligibility: eligibility.toUpperCase(),
-      imageUrl: images[0]?.url || 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=400&q=80',
+      imageUrl: images[0]?.url || '',
       totalImages: images.length
     };
 
@@ -202,6 +204,27 @@ export default function DashboardView() {
       setError('Unable to reach your API server. Please check your connection state parameters.');
     }
   };
+
+  // New handler for file input change – creates object URLs for preview and stores them in state
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+    const newImages = files.map((file) => ({
+      id: `${Date.now()}-${Math.random()}`,
+      url: URL.createObjectURL(file)
+    }));
+    setImages((prev) => [...prev, ...newImages]);
+    // Reset the file input value to allow re-selecting the same file(s) later
+    e.target.value = '';
+  };
+
+  // Cleanup object URLs whenever images change
+  useEffect(() => {
+    // Revoke URLs of previous images when the list updates
+    return () => {
+      images.forEach((img) => URL.revokeObjectURL(img.url));
+    };
+  }, [images]);
 
   return (
     <div className="flex h-screen w-full bg-white font-sans antialiased overflow-hidden relative">
@@ -508,7 +531,7 @@ export default function DashboardView() {
                   </button>
                 </div>
                 
-                <input type="file" ref={fileInputRef} className="hidden" multiple accept="image/*" />
+                <input type="file" ref={fileInputRef} className="hidden" multiple accept="image/*" onChange={handleFileChange} />
                 
                 <div className="border border-dashed border-gray-200 rounded-xl p-3 flex flex-wrap gap-2.5 min-h-[72px] items-center bg-white">
                   {images.map((img) => (
@@ -516,7 +539,7 @@ export default function DashboardView() {
                       <img src={img.url} alt="thumbnail" className="max-h-full max-w-full object-contain rounded-md" />
                       <button
                         type="button"
-                        onClick={() => setImages(prev => prev.filter(i => i.id !== img.id))}
+                        onClick={() => { setImages(prev => prev.filter(i => i.id !== img.id)); URL.revokeObjectURL(img.url); }}
                         className="absolute -top-1 -right-1 bg-white border border-gray-200 text-gray-400 hover:text-gray-700 rounded-full w-3.5 h-3.5 flex items-center justify-center shadow-xs cursor-pointer"
                       >
                         <X className="w-2 h-2" />
